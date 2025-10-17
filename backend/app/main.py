@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from .account import routers as account_routers
 from .account import models  # モデルをインポートしてテーブルを認識させる
+from .schedule import routers as schedule_routers
 
 app = FastAPI(title="Portal API", version="1.0.0")
 
@@ -16,6 +17,7 @@ app.add_middleware(
 
 # ルーター登録
 app.include_router(account_routers.router, prefix="/api", tags=["account"])
+app.include_router(schedule_routers.router, prefix="/api", tags=["schedule"])
 
 @app.get("/")
 async def root():

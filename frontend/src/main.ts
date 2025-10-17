@@ -4,6 +4,7 @@ import App from './App.vue';
 import LoginView from './account/views/LoginView.vue';
 import AdminView from './views/AdminView.vue';
 import UserMenuView from './views/UserMenuView.vue';
+import ScheduleView from './schedule/views/ScheduleView.vue';
 
 const router = createRouter({
   history: createWebHistory(),
@@ -22,6 +23,11 @@ const router = createRouter({
       path: '/user',
       name: 'UserMenu',
       component: UserMenuView
+    },
+    {
+      path: '/schedule',
+      name: 'Schedule',
+      component: ScheduleView
     }
   ]
 });
