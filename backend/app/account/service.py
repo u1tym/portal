@@ -98,3 +98,33 @@ class Account:
     def get_redirect_url(self) -> Optional[str]:
         """遷移先URL取得"""
         return self.redirect_url
+
+    def verify_session(self, session_string: str) -> bool:
+        """セッション確認"""
+        if not self.user_id:
+            return False
+
+        try:
+            # セッション管理テーブルから該当セッション文字列を検索
+            session = self.db.query(Session).filter(
+                Session.user_id == self.user_id,
+                Session.session_string == session_string
+            ).first()
+
+            if not session:
+                return False
+
+            # セッション文字列を再作成してDBを更新
+            new_session_string = generate_session_string()
+            session.session_string = new_session_string
+            session.last_access_time = datetime.now()
+            self.db.commit()
+
+            # 新しいセッション文字列を保持
+            self.session_string = new_session_string
+
+            return True
+
+        except Exception:
+            self.db.rollback()
+            return False
