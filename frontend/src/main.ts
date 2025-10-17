@@ -1,7 +1,7 @@
 import { createApp } from 'vue';
 import { createRouter, createWebHistory } from 'vue-router';
 import App from './App.vue';
-import LoginView from './views/LoginView.vue';
+import LoginView from './account/views/LoginView.vue';
 import AdminView from './views/AdminView.vue';
 import UserMenuView from './views/UserMenuView.vue';
 
