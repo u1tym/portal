@@ -6,9 +6,15 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://puser:ppassword@localhost:5432/portal")
+DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://puser:ppassword@localhost:5432/portal?client_encoding=utf8")
 
-engine = create_engine(DATABASE_URL)
+# 文字エンコーディングの問題を解決するため、接続パラメータを追加
+engine = create_engine(
+    DATABASE_URL,
+    connect_args={
+        "client_encoding": "utf8"
+    }
+)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()

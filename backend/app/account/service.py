@@ -2,10 +2,8 @@ from typing import Optional
 from sqlalchemy.orm import Session
 from datetime import datetime
 
-from ..models.user import User
-from ..models.session import Session
-from ..models.content import Content
-from ..utils import generate_random_key, generate_session_string, generate_hash
+from .models import User, Session, Content
+from ..core.utils import generate_random_key, generate_session_string, generate_hash
 
 
 class Account:
