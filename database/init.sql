@@ -22,7 +22,6 @@ CREATE TABLE contents (
     content_title VARCHAR(255),
     redirect_url VARCHAR(255) NOT NULL,
     PRIMARY KEY (user_id, display_order),
-    UNIQUE (display_order),
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
@@ -32,5 +31,5 @@ INSERT INTO users (username, password) VALUES
 ('user1', 'password123');
 
 INSERT INTO contents (user_id, display_order, content_title, redirect_url) VALUES
-(1, 0, 'Admin Panel', 'https://admin.example.com'),
-(2, 1, 'User Panel', 'https://user.example.com');
+(1, 0, 'Admin Panel', '/admin'),
+(2, 0, 'User Panel', '/user');

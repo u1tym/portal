@@ -2,6 +2,8 @@ import { createApp } from 'vue';
 import { createRouter, createWebHistory } from 'vue-router';
 import App from './App.vue';
 import LoginView from './views/LoginView.vue';
+import AdminView from './views/AdminView.vue';
+import UserMenuView from './views/UserMenuView.vue';
 
 const router = createRouter({
   history: createWebHistory(),
@@ -10,6 +12,16 @@ const router = createRouter({
       path: '/',
       name: 'Login',
       component: LoginView
+    },
+    {
+      path: '/admin',
+      name: 'Admin',
+      component: AdminView
+    },
+    {
+      path: '/user',
+      name: 'UserMenu',
+      component: UserMenuView
     }
   ]
 });

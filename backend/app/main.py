@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from .routers import auth
+from . import models  # モデルをインポートしてテーブルを認識させる
 
 app = FastAPI(title="Portal API", version="1.0.0")
 
