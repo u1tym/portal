@@ -104,6 +104,7 @@ const handleLogin = async () => {
 
     // 4. セッション保存とメニュー表示
     sessionStorage.setItem('session_string', loginResponse.session_string);
+    sessionStorage.setItem('username', username.value);
     menuItems.value = loginResponse.menu || [];
     isLoggedIn.value = true;
 
