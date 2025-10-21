@@ -4,3 +4,9 @@
 [submodule "frontend/src/bank"]
 	path = frontend/src/bank
 	url = git@github.com:u1tym/portal_bank_front
+[submodule "frontend/src/schedule"]
+	path = frontend/src/schedule
+	url = git@github.com:u1tym/portal_schedule_front
+[submodule "backend/app/schedule"]
+	path = backend/app/schedule
+	url = git@github.com:u1tym/portal_schedule_back
