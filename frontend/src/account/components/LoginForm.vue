@@ -1,7 +1,7 @@
 <template>
   <div class="login-form">
     <h2>ログイン</h2>
-    <form @submit.prevent="handleLogin">
+    <form v-if="!isLoggedIn" @submit.prevent="handleLogin">
       <div class="form-group">
         <label for="username">ユーザ名:</label>
         <input
@@ -29,6 +29,21 @@
       </button>
     </form>
 
+    <!-- ログイン成功後のメニュー表示 -->
+    <div v-if="isLoggedIn" class="menu-section">
+      <h3>メニュー</h3>
+      <div class="menu-buttons">
+        <button
+          v-for="(menuItem, index) in menuItems"
+          :key="index"
+          @click="navigateToMenu(menuItem.url)"
+          class="menu-button"
+        >
+          {{ menuItem.title }}
+        </button>
+      </div>
+    </div>
+
     <div v-if="errorMessage" class="error-message">
       {{ errorMessage }}
     </div>
@@ -45,6 +60,8 @@ const username = ref('');
 const password = ref('');
 const isLoading = ref(false);
 const errorMessage = ref('');
+const isLoggedIn = ref(false);
+const menuItems = ref<Array<{title: string, url: string}>>([]);
 
 const generateHash = async (password: string, key: string): Promise<string> => {
   const encoder = new TextEncoder();
@@ -85,9 +102,10 @@ const handleLogin = async () => {
       hash: hash
     });
 
-    // 4. セッション保存とリダイレクト
+    // 4. セッション保存とメニュー表示
     localStorage.setItem('session_string', loginResponse.session_string);
-    window.location.href = loginResponse.redirect_url;
+    menuItems.value = loginResponse.menu || [];
+    isLoggedIn.value = true;
 
   } catch (error) {
     const message = error instanceof Error ? error.message : 'ログインに失敗しました';
@@ -95,6 +113,10 @@ const handleLogin = async () => {
   } finally {
     isLoading.value = false;
   }
+};
+
+const navigateToMenu = (url: string) => {
+  window.location.href = url;
 };
 </script>
 
@@ -166,5 +188,44 @@ button:disabled {
   border: 1px solid #f5c6cb;
   border-radius: 4px;
   text-align: center;
+}
+
+.menu-section {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+}
+
+.menu-section h3 {
+  margin-bottom: 15px;
+  color: #333;
+  text-align: center;
+}
+
+.menu-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.menu-button {
+  padding: 12px 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.menu-button:hover {
+  background-color: #218838;
+}
+
+.menu-button:active {
+  background-color: #1e7e34;
 }
 </style>

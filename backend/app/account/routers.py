@@ -4,6 +4,7 @@ from pydantic import BaseModel
 
 from .config import get_account_db
 from .service import Account
+from .models import Content
 
 router = APIRouter()
 
@@ -18,9 +19,14 @@ class LoginRequest(BaseModel):
     key: str
     hash: str
 
+class MenuItem(BaseModel):
+    title: str
+    url: str
+
 class LoginResponse(BaseModel):
     session_string: str
     redirect_url: str
+    menu: list[MenuItem]
 
 @router.post("/get-key", response_model=GetKeyResponse)
 async def get_key(request: GetKeyRequest, db: Session = Depends(get_account_db)):
@@ -59,7 +65,22 @@ async def login(request: LoginRequest, db: Session = Depends(get_account_db)):
     if not session_string:
         raise HTTPException(status_code=500, detail="内部処理異常")
 
+    # メニュー取得（display_order >= 1のコンテンツをdisplay_order順に取得）
+    menu_contents = db.query(Content).filter(
+        Content.user_id == account.user_id,
+        Content.display_order >= 1
+    ).order_by(Content.display_order).all()
+
+    # メニュー配列を作成
+    menu = []
+    for content in menu_contents:
+        menu.append(MenuItem(
+            title=content.content_title or "",
+            url=content.redirect_url
+        ))
+
     return LoginResponse(
         session_string=session_string,
-        redirect_url=redirect_url
+        redirect_url=redirect_url,
+        menu=menu
     )
