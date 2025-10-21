@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
 
-from ..core.database import get_db
+from .config import get_account_db
 from .service import Account
 
 router = APIRouter()
@@ -23,7 +23,7 @@ class LoginResponse(BaseModel):
     redirect_url: str
 
 @router.post("/get-key", response_model=GetKeyResponse)
-async def get_key(request: GetKeyRequest, db: Session = Depends(get_db)):
+async def get_key(request: GetKeyRequest, db: Session = Depends(get_account_db)):
     """キー値取得API"""
     # ユーザー存在チェック
     if not Account.check_user_exists(request.username, db):
@@ -40,7 +40,7 @@ async def get_key(request: GetKeyRequest, db: Session = Depends(get_db)):
     return GetKeyResponse(key=key_value)
 
 @router.post("/login", response_model=LoginResponse)
-async def login(request: LoginRequest, db: Session = Depends(get_db)):
+async def login(request: LoginRequest, db: Session = Depends(get_account_db)):
     """ログイン認証API"""
     # Accountインスタンス作成
     account = Account(request.username, db)

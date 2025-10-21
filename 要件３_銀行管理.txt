@@ -1,0 +1,19 @@
+銀行管理機能の作成
+
+frontend/src下に、フォルダ bank を作成し、以下のフォルダを作成
+　components　コンポーネント格納用
+　services　api格納用
+　types　typescriptの型定義格納用
+　views　メイン画面格納用
+
+
+　views下にBankView.vueを作成して、中身はタイトルだけ表示。
+
+backend/app下に、フォルダ bank を作成し、以下のファイルを作成
+
+　models.py、routers.py、service.py
+
+
+
+
+

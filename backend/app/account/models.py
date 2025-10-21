@@ -1,15 +1,15 @@
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
-from ..core.database import Base
+from .config import AccountBase
 
-class User(Base):
+class User(AccountBase):
     __tablename__ = "users"
 
     user_id = Column(Integer, primary_key=True, index=True)
     username = Column(String(255), unique=True, nullable=False, index=True)
     password = Column(String(255), nullable=False)
 
-class Session(Base):
+class Session(AccountBase):
     __tablename__ = "sessions"
 
     user_id = Column(Integer, ForeignKey("users.user_id"), primary_key=True)
@@ -17,7 +17,7 @@ class Session(Base):
     session_string = Column(String(255), nullable=True)
     last_access_time = Column(DateTime, nullable=False)
 
-class Content(Base):
+class Content(AccountBase):
     __tablename__ = "contents"
 
     user_id = Column(Integer, ForeignKey("users.user_id"), primary_key=True)
