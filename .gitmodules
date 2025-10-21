@@ -1,0 +1,6 @@
+[submodule "backend/app/bank"]
+	path = backend/app/bank
+	url = git@github.com:u1tym/portal_bank_back.git
+[submodule "frontend/src/bank"]
+	path = frontend/src/bank
+	url = git@github.com:u1tym/portal_bank_front
