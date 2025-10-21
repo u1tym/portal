@@ -103,7 +103,7 @@ const handleLogin = async () => {
     });
 
     // 4. セッション保存とメニュー表示
-    localStorage.setItem('session_string', loginResponse.session_string);
+    sessionStorage.setItem('session_string', loginResponse.session_string);
     menuItems.value = loginResponse.menu || [];
     isLoggedIn.value = true;
 
