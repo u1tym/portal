@@ -167,4 +167,67 @@ DayBox.vueでは、D3.jsを使って、箱を書く
 
 描画テスト用のページをviews下に、DayBoxTest.vueで作って。
 
+－－－
+間違えました。
+DayBox.vueに渡すのは、
+　年月日
+　休日注釈（文字列）
+　スケジュール情報として、以下の情報をひと固まりとして、その配列
+　　スケジュールのID
+　　タイトル
+　　終日フラグ
+　　開始日時
+　　期間
+　　TODO完了フラグ
+　　描画色
+
+
+－－－
+
+DayBoxに渡しているScheduleInfoに、positionNumberを追加して。これは表示順で、必須項目としたいです。
+
+－－－
+DayBoxに渡しているScheduleInfoに、TODOフラグを追加して。これは必須項目としたいです。
+
+－－－
+
+
+
+DayBoxに、スケジュールの情報を表示する処理を追加したい。
+
+positionNumber順に上から表示する。
+positionNumberは、連番になっていない可能性もあり、番号が空いている場合は、表示の開ける。
+
+表示する内容は、
+
+isAllDayがTrueで、startDateTimeの年月が、DayBoxの年月と違う場合
+　startDateTimeの年月+duration(日)が、DayBoxの日付と同じ場合は、→の矢印をcolorの色で引く
+　つまり、
+　│　　　　　│
+　│--------→│
+　という感じ
+　→startDateTimeの年月+duration(日)が、DayBoxの日付と違く場合は、横線（矢印の矢尻がないイメージ）をcolorの色で引く
+　つまり、
+　│　　　　　│
+　│----------│
+　という感じ
+isAllDayがTrueで、startDateTimeの年月が、DayBoxの年月と同じ場合は、←の矢印をcolorの色で引いて、その上に、titleの内容をcolorの色のフォントで書く
+　つまり、
+　│title 　　│
+　│←--------│
+　という感じ
+
+以下は、isAllDayがFalseの場合
+TODOのときは、先頭にチェックボックスを付ける。TODOではないときは付けない
+続けて、isAllDayがFalseのときは、startDateTimeの時分を hh:mm の形で付ける。iAllDayがTrueのときは付けない
+続けて、titleを書く
+また、isTodoCompletedがTrueのときは、titleに取り消し線を付ける
+フォント色は黒で、
+背景色をcolorで付ける。左端をちょっと濃くして、文字部分はちょっと薄くして、括弧良い感じで。
+
+---
+
+
+
+チェックボックス、開始
 
