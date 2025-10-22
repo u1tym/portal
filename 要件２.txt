@@ -227,7 +227,152 @@ TODOのときは、先頭にチェックボックスを付ける。TODOではな
 
 ---
 
+矢印ではなく、線を引く場合や、→の矢印を引くケースでは、titleは表示しなくていいです。
+あと、
+
+isAllDayがTrueで、startDateTimeの年月が、DayBoxの年月と同じ場合は、←の矢印をcolorの色で引いて、その上に、titleの内容をcolorの色のフォントで書く
+　つまり、
+　│title 　　│
+　│←--------│
+　という感じ
+
+は、そのままですが、そのときに、duration(日)が1の場合には、
+　│title 　　│
+　│←------→│
+のように、両端に矢尻を付けてください。
 
 
+
+
+☑ 20:00 ☐ 読書
 チェックボックス、開始
+
+
+
+---
+
+scheduleにコンポーネントを追加
+
+DayBoxTitle.vue
+
+D3.jsで作成
+曜日を表すタイトル部分
+親から曜日を渡されて、曜日を箱で描画
+横幅は、DayBox.vueの横幅と同じ
+縦幅は、文字１行程度
+土曜日は、青系文字で、背景が薄い青
+日曜日は、赤系文字で、背景が薄い赤
+
+DayBoxTest.vueで、カレンダー表示のヘッダ部分で呼び出すようにして。
+
+
+
+
+
+－－－
+
+
+スケジュール管理のフロントエンドにコンポーネントを追加して欲しい。
+
+DayLongBox.vue
+親コンポーネントから以下を受け取る（DayBoxと同じ）
+
+interface ScheduleInfo {
+  id: number;           // スケジュールのID
+  title: string;        // タイトル
+  isAllDay: boolean;    // 終日フラグ
+  startDateTime: Date;  // 開始日時
+  duration: number;     // 期間
+  isTodoCompleted: boolean; // TODO完了フラグ
+  color: string;        // 描画色
+  positionNumber: number; // 表示順（必須項目）
+  isTodo: boolean;      // TODOフラグ（必須項目）
+}
+
+// Props定義
+interface DayBoxProps {
+  date: Date;                    // 年月日
+  holidayNote?: string;          // 休日注釈
+  schedules?: ScheduleInfo[];     // スケジュール情報の配列
+  isCurrentMonth?: boolean;      // 当月フラグ
+}
+
+DayLongBox.vueでは、D3.jsを使って、箱を書く
+デザインは
+┌─────────┐
+│　　　　　　　　　│
+│　　　　　　　　　│
+│－　－　－　－　－│
+│　　　　　　　　　│
+│　　　　　　　　　│
+│－　－　－　－　－│
+│　　　　　　　　　│
+│　　　　　　　　　│
+│－　－　－　－　－│
+│　　　　　　　　　│
+│　　　　　　　　　│
+│－　－　－　－　－│
+│　　　　　　　　　│
+│　　　　　　　　　│
+│－　－　－　－　－│
+│　　　　　　　　　│
+│　　　　　　　　　│
+└─────────┘
+
+00:00～01:00部分が
+┌─────────┐
+│　　　　　　　　　│
+│　　　　　　　　　│
+│－　－　－　－　－│
+
+で、
+23:00～24:00部分が
+│－　－　－　－　－│
+│　　　　　　　　　│
+│　　　　　　　　　│
+└─────────┘
+
+です。
+
+時刻等は表示しなくていいです。
+スケジュールの情報も、あとで作るので、今はいらないです。
+
+
+DayBoxTest.vueに、呼び出しテストを作って。
+横に3日分を並べる感じです。
+
+
+－－－
+終日のスケジュールを表示する領域を追加してください。
+
+┌─────────┐
+│　　　　　　　　　│← 終日のスケジュールを表示する場所
+│　　　　　　　　　│
+│－　－　－　－　－│
+│　　　　　　　　　│← 00:00～01:00の部分
+│　　　　　　　　　│
+│－　－　－　－　－│
+
+－－－
+DayLongBoxにスケジュールを表示する処理を追加
+
+終日のスケジュールを表示する領域に、isAllDayがTrueのものを表示する。
+positionNumberの昇順に表示する。連番ではないが、詰めて、順番に表示する。
+表示内容は、
+
+isTodoがTrueの場合で、startDateTimeの年月日とDayLongBoxの年月日が同じ場合には、チェックボックスを表示する。
+startDateTimeから、startDateTime+duration(日)の間に、DayLongBoxの年月日がある場合には、チェックボックスを表示しない。
+続いて、titleを表示する。
+isTodoCompletedがTrueのときは、チェックボックスはチェック済みにして、titleに取り消し線を付ける。
+また、DayBoxと同じように、背景をcolorで囲う。
+
+
+
+－－－
+
+DayLongBoxに、終日ではないスケジュールを表示
+
+startDateTimeの位置から箱を描画
+
+
 
