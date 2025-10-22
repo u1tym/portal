@@ -5,6 +5,7 @@ import LoginView from './account/views/LoginView.vue';
 import AdminView from './views/AdminView.vue';
 import UserMenuView from './views/UserMenuView.vue';
 import ScheduleView from './schedule/views/ScheduleView.vue';
+import DayBoxTest from './schedule/views/DayBoxTest.vue';
 
 const router = createRouter({
   history: createWebHistory(),
@@ -28,6 +29,11 @@ const router = createRouter({
       path: '/schedule',
       name: 'Schedule',
       component: ScheduleView
+    },
+    {
+      path: '/daybox-test',
+      name: 'DayBoxTest',
+      component: DayBoxTest
     }
   ]
 });
