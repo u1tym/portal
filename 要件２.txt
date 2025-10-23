@@ -372,7 +372,30 @@ isTodoCompletedがTrueのときは、チェックボックスはチェック済�
 
 DayLongBoxに、終日ではないスケジュールを表示
 
-startDateTimeの位置から箱を描画
+startDateTimeの位置から、startDateTime+duration(分)のところまで箱を描画
+
+┌─────────┐←startDateTime
+│ここに文字　　　　│
+│　　　　　　　　　│
+│　　　　　　　　　│
+│　　　　　　　　　│
+│　　　　　　　　　│
+└─────────┘←startDateTime+duration(分)
+
+ここに文字の部分は、
+
+isTodoがTrueの場合は、先頭にチェックボックス
+続けて、startDateTimeを hh:mm で書いて
+続けて、title を書く。
+isTodoCompletedがTrueのときは、チェックボックスをチェック済みにして、titleに取り消し線を付ける。
+
+箱の色は、colorで、左側が濃くて、右側が薄くなる感じ
 
 
+
+DayBoxTest.vueのaddScheduleに、引数としてhourとminuteを追加して。この変数は省略可として。
+
+DayBox.vueからは、hourとminuteを指定しないで。
+DayLongBox.vueで、時刻部分をクリックした場合、クリックされた場所から、30分単位で時刻を算出して、addScheduleを呼び出すようにして。そのときに、hourとminuteを指定して。
+DayLongBox.vueで、終日のスケジュールや時刻部分にあるスケジュールをクリックした場合には、DayBoxTest.vueのeditScheduleを呼び出すようにして。
 
