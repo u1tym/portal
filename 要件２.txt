@@ -399,3 +399,51 @@ DayBox.vueからは、hourとminuteを指定しないで。
 DayLongBox.vueで、時刻部分をクリックした場合、クリックされた場所から、30分単位で時刻を算出して、addScheduleを呼び出すようにして。そのときに、hourとminuteを指定して。
 DayLongBox.vueで、終日のスケジュールや時刻部分にあるスケジュールをクリックした場合には、DayBoxTest.vueのeditScheduleを呼び出すようにして。
 
+
+
+DayLongBox.vueで、addScheduleを呼び出す際の時刻が30分ズレているように見えます。具体的には、終日スケジュール表示欄の下半分くらいをクリックしたときに、00:00と判断されてしまっているように見えます。
+
+
+－－－
+
+
+ScheduleMonthlyView.vueとScheduleWeekly.vueを作って。
+ScheduleMonthlyView.vueとScheduleWeekly.vueは、Scheduleview.vueから呼びます。
+
+
+ScheduleView.vueでは、一番上にタイトルを書いて、右上にメニューに戻るボタンを付けます。
+月表示と週間表示の切り替えタブを付けます。
+
+月表示の場合は、ScheduleMonthlyView.vueを表示して
+週間表示の場合は、ScheduleWeekly.vueを表示します。
+
+Scheduleview.vueから、ScheduleMonthlyView.vue、ScheduleWeekly.vueには、以下を渡します。
+
+　表示対象年月日
+　表示開始年月日
+　表示終了年月日
+
+　バックエンドから取得したスケジュールの情報
+
+ScheduleMonthlyView.vueには、加えて、以下を渡します。
+
+　日曜始まり月表示／月曜始まり月表示が区別できる値
+
+
+ScheduleMonthlyView.vue、ScheduleWeekly.vueからScheduleView.vueには、以下の契機を受け取ります。
+
+　前への表示を選択された契機
+　次への表示を選択された契機
+　スケジュールの編集を選択された契機（引数として、スケジュールのID）
+　スケジュールの追加を選択された契機（引数として、年、月、日、時、分。時、分は省略可）
+
+ScheduleMonthlyView.vueには、加えて、以下の契機を受け取る。
+
+　日曜始まりを指定された契機
+　月曜始まりを指定された契機
+
+
+
+
+
+
